@@ -36,6 +36,19 @@ body {
 	font-family: "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", "Meiryo", "HGPｺﾞｼｯｸM", "Osaka", "ＭＳ Ｐゴシック", sans-serif, Century Gothic, Arial;
 }
 
+/* 課題4imageいれたい */
+#btn {
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    padding: 15px 30px;
+    display: inline-block;
+}
+input {
+    background: none;
+    box-shadow: none;
+    border: none;
+}
 
 /*ドロワー用でコメントアウト or 削除*/
 
