@@ -86,7 +86,8 @@ def bbs():
         c.execute("select name from user where id = ?", (user_id,))
         # fetchoneはタプル型
         user_info = c.fetchone()
-        c.execute("select id,comment from bbs where userid = ? order by id", (user_id,))
+        c.execute("select id,comment from bbs where userid = ? and delete_flag = 0 order by id", (user_id,))
+        print(c.execute)
         comment_list = []
         for row in c.fetchall():
             comment_list.append({"id": row[0], "comment": row[1]})
@@ -102,10 +103,11 @@ def add():
     user_id = session['user_id']
     # フォームから入力されたアイテム名の取得
     comment = request.form.get("comment")
+    delete_flag = request.form.get("delete_flag")
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
     # DBにデータを追加する
-    c.execute("insert into bbs values(null,?,?)", (user_id, comment))
+    c.execute("insert into bbs values(null,?,?,?)", (user_id, comment, 0))
     conn.commit()
     conn.close()
     return redirect('/bbs')
@@ -164,7 +166,7 @@ def del_task():
     id = int(id)
     conn = sqlite3.connect("service.db")
     c = conn.cursor()
-    c.execute("delete from bbs where id = ?", (id,))
+    c.execute("update bbs SET delete_flag = 1 where id = ?", (id,))
     conn.commit()
     c.close()
     return redirect("/bbs")
@@ -183,4 +185,4 @@ def notfound404(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-    app.run()
+    app.run(debug=True)
